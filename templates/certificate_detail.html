@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Certificate Details
+    </h2>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="250">Certificate ID</th>
+                    <td>{{ certificate.id }}</td>
+                </tr>
+
+                <tr>
+                    <th>Participant Name</th>
+                    <td>{{ certificate.participant.name }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ certificate.participant.email }}</td>
+                </tr>
+
+                <tr>
+                    <th>College</th>
+                    <td>{{ certificate.participant.college }}</td>
+                </tr>
+
+                <tr>
+                    <th>Issued At</th>
+                    <td>{{ certificate.issued_at }}</td>
+                </tr>
+
+                <tr>
+                    <th>QR Code</th>
+                    <td>
+
+                        {% if certificate.qr_path %}
+
+                            <img
+                                src="{{ url_for('static', filename=certificate.qr_path) }}"
+                                width="250"
+                                class="img-fluid border rounded"
+                            >
+
+                        {% else %}
+
+                            <span class="text-danger">
+                                QR Code Not Generated
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="mt-4">
+
+                <a
+                    href="{{ url_for('certificate_bp.verify_certificate', certificate_id=certificate.id) }}"
+                    class="btn btn-success"
+                >
+                    Verify Certificate
+                </a>
+
+                <a
+                    href="{{ url_for('admin.download_certificate', certificate_id=certificate.id) }}"
+                    class="btn btn-primary"
+                >
+                    Download PDF
+                </a>
+
+                <a
+                    href="{{ url_for('admin.certificates') }}"
+                    class="btn btn-secondary"
+                >
+                    Back
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

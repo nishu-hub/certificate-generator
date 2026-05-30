@@ -1,7 +1,81 @@
 {% extends "base.html" %}
-{% block content %} 
 
-<h1>Auto Certificate Generator</h1> 
-<p>Project Setup Successful</p> 
+{% block content %}
+<a href="/participants">Participants</a>
+<a href="/upload-participants">
+    Upload Participants
+</a>
+
+<h2 class="mb-4">
+    Dashboard
+</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="card-box bg-blue">
+
+            <h4>
+                Total Events
+            </h4>
+
+            <h2>
+                5
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card-box bg-green">
+
+            <h4>
+                Participants
+            </h4>
+
+            <h2>
+                120
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card-box bg-orange">
+
+            <h4>
+                Certificates
+            </h4>
+
+            <h2>
+                110
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card mt-4 shadow-sm">
+
+    <div class="card-body">
+
+        <h4>
+            Recent Activity
+        </h4>
+
+        <p>
+            Certificate generation system running successfully.
+        </p>
+
+    </div>
+
+</div>
 
 {% endblock %}

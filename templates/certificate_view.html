@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+            <h3>Certificate Details</h3>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="250">Certificate ID</th>
+                    <td>{{ certificate.id }}</td>
+                </tr>
+
+                <tr>
+                    <th>Participant Name</th>
+                    <td>{{ certificate.participant.name }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ certificate.participant.email }}</td>
+                </tr>
+
+                <tr>
+                    <th>College</th>
+                    <td>{{ certificate.participant.college }}</td>
+                </tr>
+
+                <tr>
+                    <th>Issued At</th>
+                    <td>{{ certificate.issued_at }}</td>
+                </tr>
+
+            </table>
+
+            {% if certificate.qr_path %}
+            <div class="text-center mt-4">
+
+                <h5>QR Code</h5>
+
+                <img
+                    src="{{ url_for('static', filename=certificate.qr_path) }}"
+                    class="img-fluid"
+                    width="250"
+                >
+
+            </div>
+            {% endif %}
+
+            <div class="mt-4">
+
+                <a
+                    href="{{ url_for('certificate_bp.verify_certificate', certificate_id=certificate.id) }}"
+                    class="btn btn-primary"
+                >
+                    Verify Certificate
+                </a>
+
+                <a
+                    href="{{ url_for('participant_list') }}"
+                    class="btn btn-secondary"
+                >
+                    Back to Participants
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

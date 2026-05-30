@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Events</h2>
+
+        <a href="#" class="btn btn-success">
+            Add Event
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            {% if events %}
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Organizer</th>
+                            <th>Created At</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for event in events %}
+
+                        <tr>
+
+                            <td>{{ event.id }}</td>
+
+                            <td>{{ event.title }}</td>
+
+                            <td>{{ event.date }}</td>
+
+                            <td>{{ event.organizer }}</td>
+
+                            <td>{{ event.created_at }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% else %}
+
+                <div class="alert alert-warning">
+
+                    No events found.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

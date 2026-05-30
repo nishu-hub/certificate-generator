@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Certificates
+    </h2>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            {% if certificates %}
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Certificate ID</th>
+                            <th>Participant Name</th>
+                            <th>Email</th>
+                            <th>College</th>
+                            <th>Issued At</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for certificate in certificates %}
+
+                        <tr>
+
+                            <td>
+                                {{ certificate.id }}
+                            </td>
+
+                            <td>
+                                {{ certificate.participant.name }}
+                            </td>
+
+                            <td>
+                                {{ certificate.participant.email }}
+                            </td>
+
+                            <td>
+                                {{ certificate.participant.college }}
+                            </td>
+
+                            <td>
+                                {{ certificate.issued_at }}
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{{ url_for('admin.certificate_detail', certificate_id=certificate.id) }}"
+                                    class="btn btn-primary btn-sm"
+                                >
+                                    View
+                                </a>
+
+                                <a
+                                    href="{{ url_for('certificate_bp.verify_certificate', certificate_id=certificate.id) }}"
+                                    class="btn btn-success btn-sm"
+                                >
+                                    Verify
+                                </a>
+
+                                <a
+                                    href="{{ url_for('admin.download_certificate', certificate_id=certificate.id) }}"
+                                    class="btn btn-info btn-sm"
+                                >
+                                    PDF
+                                </a>
+
+                                <form
+                                    action="{{ url_for('admin.delete_certificate', certificate_id=certificate.id) }}"
+                                    method="POST"
+                                    style="display:inline;"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Delete this certificate?')"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% else %}
+
+                <div class="alert alert-warning">
+
+                    No certificates found.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

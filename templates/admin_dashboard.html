@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <hr>
+
+    <h3>Total Participants: {{ participant_count }}</h3>
+
+    <h3>Total Certificates: {{ certificate_count }}</h3>
+
+    <h3>Pending Certificates: {{ pending_count }}</h3>
+
+    <hr>
+
+    <a href="/admin/participants">
+        View Participants
+    </a>
+
+    <br><br>
+
+    <a href="/admin/certificates">
+        View Certificates
+    </a>
+
+    <br><br>
+
+    <a href="/logout">
+        Logout
+    </a>
+
+</body>
+</html>

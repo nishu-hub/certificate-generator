@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        {% if valid %}
+
+            <div class="alert alert-success">
+
+                <h3>✅ Certificate Verified</h3>
+
+                <hr>
+
+                <p>
+                    <strong>Name:</strong>
+                    {{ certificate.participant.name }}
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    {{ certificate.participant.email }}
+                </p>
+
+                <p>
+                    <strong>College:</strong>
+                    {{ certificate.participant.college }}
+                </p>
+
+                <p>
+                    <strong>Certificate ID:</strong>
+                    {{ certificate.id }}
+                </p>
+
+                <p>
+                    <strong>Issued At:</strong>
+                    {{ certificate.issued_at }}
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-danger">
+
+                <h3>❌ Invalid Certificate</h3>
+
+                <hr>
+
+                <p>{{ message }}</p>
+
+            </div>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('home_dashboard') }}"
+            class="btn btn-primary"
+        >
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
