@@ -1,19 +1,33 @@
-from app import app
-from models.models import db, Admin
 from werkzeug.security import generate_password_hash
 
+from app import app
+from models.models import db, Admin
+
+
 with app.app_context():
-    
-    hashed_password = generate_password_hash("admin123")
 
-    admin = Admin(
-        username="admin",
-        password=hashed_password
-    ) 
-    admins = Admin.query.all()
+    username = "admin"
 
-    db.session.add(admin)
+    password = "admin123"
 
-    db.session.commit()
+    existing_admin = Admin.query.filter_by(
+        username=username
+    ).first()
 
-    print("Admin Added Successfully")
+    if existing_admin:
+
+        print("Admin already exists.")
+
+    else:
+
+        admin = Admin(
+            username=username,
+            password=generate_password_hash(password)
+        )
+
+        db.session.add(admin)
+        db.session.commit()
+
+        print("Admin created successfully.")
+        print("Username:", username)
+        print("Password:", password)

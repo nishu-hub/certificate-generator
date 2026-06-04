@@ -17,6 +17,13 @@ from models.models import (
     Participant,
     Certificate,
     Event
+)  
+
+from models.models import (
+    Event,
+    Participant,
+    Certificate,
+    VerificationLog
 )
 
 # ==========================
@@ -54,19 +61,26 @@ def login_required(func):
 @login_required
 def dashboard():
 
+    event_count = Event.query.count()
+
     participant_count = Participant.query.count()
 
     certificate_count = Certificate.query.count()
 
-    pending_count = (
-        participant_count - certificate_count
-    )
+    verification_count = VerificationLog.query.count()
+
+    recent_logs = VerificationLog.query.order_by(
+        VerificationLog.scan_time.desc()
+).limit(5).all()
+
 
     return render_template(
         "admin_dashboard.html",
+        event_count=event_count,
         participant_count=participant_count,
         certificate_count=certificate_count,
-        pending_count=pending_count
+        verification_count=verification_count,
+        recent_logs=recent_logs
     )
 
 # ========================== 
@@ -84,6 +98,7 @@ def events():
     )
     
     
+
 # ==========================
 # PARTICIPANT LIST
 # ==========================

@@ -1,37 +1,150 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Admin Dashboard</h1>
+{% block content %}
 
-    <hr>
+<div class="container mt-4">
 
-    <h3>Total Participants: {{ participant_count }}</h3>
+    <h2 class="mb-4">Admin Dashboard</h2>
 
-    <h3>Total Certificates: {{ certificate_count }}</h3>
+    <!-- ===================== STATS CARDS ===================== -->
+    <div class="row">
 
-    <h3>Pending Certificates: {{ pending_count }}</h3>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5>Total Participants</h5>
+                    <h3>{{ total_participants }}</h3>
+                </div>
+            </div>
+        </div>
 
-    <hr>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5>Total Certificates</h5>
+                    <h3>{{ total_certificates }}</h3>
+                </div>
+            </div>
+        </div>
 
-    <a href="/admin/participants">
-        View Participants
-    </a>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5>Total Verifications</h5>
+                    <h3>{{ total_verifications }}</h3>
+                </div>
+            </div>
+        </div>
 
-    <br><br>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5>Invalid Verifications</h5>
+                    <h3>{{ invalid_verifications }}</h3>
+                </div>
+            </div>
+        </div>
 
-    <a href="/admin/certificates">
-        View Certificates
-    </a>
+    </div>
 
-    <br><br>
+    <!-- ===================== CHART ===================== -->
+    <div class="row mt-5">
 
-    <a href="/logout">
-        Logout
-    </a>
+        <div class="col-md-6">
 
-</body>
-</html>
+            <div class="card shadow-sm p-3">
+
+                <h5 class="text-center">Verification Status</h5>
+
+                <canvas id="verificationChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <!-- ===================== RECENT ACTIVITY ===================== -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm p-3">
+
+                <h5>Recent Verification Activity</h5>
+
+                <div style="max-height: 350px; overflow-y: auto;">
+
+                    <table class="table table-sm table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cert ID</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for log in recent_logs %}
+
+                            <tr>
+                                <td>{{ log.id }}</td>
+                                <td>{{ log.certificate_id }}</td>
+                                <td>
+                                    {% if log.status == "valid" %}
+                                        <span class="badge bg-success">Valid</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Invalid</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ log.scan_time }}</td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===================== CHART JS ===================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('verificationChart');
+
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Valid', 'Invalid'],
+        datasets: [{
+            data: [
+                {{ valid_verifications }},
+                {{ invalid_verifications }}
+            ],
+            backgroundColor: [
+                '#28a745',
+                '#dc3545'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

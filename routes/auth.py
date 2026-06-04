@@ -14,11 +14,15 @@ from models.models import Admin
 
 def login():
 
+    # Already logged in
+    if "admin_id" in session:
+        return redirect(url_for("home_dashboard"))
+
     if request.method == "POST":
 
-        username = request.form["username"]
+        username = request.form.get("username", "").strip()
 
-        password = request.form["password"]
+        password = request.form.get("password", "")
 
         admin = Admin.query.filter_by(
             username=username
@@ -31,25 +35,37 @@ def login():
 
             session["admin_id"] = admin.id
 
+            # RBAC foundation
+            session["role"] = "admin"
+
             flash(
                 "Login Successful",
                 "success"
             )
 
-            return redirect(url_for("home_dashboard"))
-
-        else:
-
-            flash(
-                "Invalid Username or Password",
-                "danger"
+            return redirect(
+                url_for("home_dashboard")
             )
 
-    return render_template("login.html")
+        flash(
+            "Invalid Username or Password",
+            "danger"
+        )
+
+    return render_template(
+        "login.html"
+    )
 
 
 def logout():
 
     session.clear()
 
-    return redirect(url_for("login"))
+    flash(
+        "Logged out successfully",
+        "info"
+    )
+
+    return redirect(
+        url_for("login")
+    )

@@ -1,78 +1,178 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a href="/participants">Participants</a>
-<a href="/upload-participants">
-    Upload Participants
-</a>
 
-<h2 class="mb-4">
-    Dashboard
-</h2>
+<div class="container-fluid">
 
-<div class="row">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="col-md-4">
+        <h2>
+            Dashboard
+        </h2>
 
-        <div class="card-box bg-blue">
+        <div>
 
-            <h4>
-                Total Events
-            </h4>
-
-            <h2>
-                5
-            </h2>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-4">
-
-        <div class="card-box bg-green">
-
-            <h4>
+            <a href="/participants"
+               class="btn btn-primary">
                 Participants
-            </h4>
+            </a>
 
-            <h2>
-                120
-            </h2>
+            <a href="/upload-participants"
+               class="btn btn-success">
+                Upload Participants
+            </a>
 
-        </div>
+            <a href="/events"
+               class="btn btn-info">
+                Events
+            </a>
 
-    </div>
-
-    <div class="col-md-4">
-
-        <div class="card-box bg-orange">
-
-            <h4>
-                Certificates
-            </h4>
-
-            <h2>
-                110
-            </h2>
+            <a href="/verification-logs"
+               class="btn btn-warning">
+                Verification Logs
+            </a>
 
         </div>
 
     </div>
 
-</div>
+    <!-- Analytics Cards -->
 
-<div class="card mt-4 shadow-sm">
+    <div class="row">
 
-    <div class="card-body">
+        <div class="col-md-3 mb-4">
 
-        <h4>
-            Recent Activity
-        </h4>
+            <div class="card bg-primary text-white shadow">
 
-        <p>
-            Certificate generation system running successfully.
-        </p>
+                <div class="card-body text-center">
+
+                    <h5>Total Events</h5>
+
+                    <h1>{{ event_count }}</h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Participants</h5>
+
+                    <h1>{{ participant_count }}</h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card bg-warning text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Certificates</h5>
+
+                    <h1>{{ certificate_count }}</h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card bg-dark text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Verifications</h5>
+
+                    <h1>{{ verification_count }}</h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Activity -->
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+                Recent Verification Activity
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if recent_logs %}
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Participant ID</th>
+
+                            <th>Scan Time</th>
+
+                            <th>IP Address</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for log in recent_logs %}
+
+                        <tr>
+
+                            <td>{{ log.id }}</td>
+
+                            <td>{{ log.participant_id }}</td>
+
+                            <td>{{ log.scan_time }}</td>
+
+                            <td>{{ log.ip_address }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% else %}
+
+                <div class="alert alert-info">
+
+                    No verification activity found.
+
+                </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
 

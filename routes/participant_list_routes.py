@@ -1,17 +1,31 @@
-from flask import render_template, session, redirect, url_for
+from flask import render_template, request
+from sqlalchemy import or_
 
 from models.models import Participant
 
 
 def participant_list():
 
-    if "admin_id" not in session:
+    search = request.args.get(
+        "search",
+        ""
+    )
 
-        return redirect(url_for("login"))
+    if search:
 
-    participants = Participant.query.all()
+        participants = Participant.query.filter(
+            or_(
+                Participant.name.contains(search),
+                Participant.email.contains(search)
+            )
+        ).all()
+
+    else:
+
+        participants = Participant.query.all()
 
     return render_template(
         "participant_list.html",
-        participants=participants
+        participants=participants,
+        search=search
     )

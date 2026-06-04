@@ -71,6 +71,12 @@
                                 Verify
                             </a>
 
+                            <a href="{{ url_for('certificate_bp.download_certificates_zip') }}">
+                                <button class="btn btn-info btn-sm">
+                                    Download All Certificates (ZIP)
+                                </button>
+</a>
+
                             <form
                                 action="{{ url_for('certificate_bp.delete_certificate', certificate_id=certificate.id) }}"
                                 method="POST"
