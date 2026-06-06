@@ -2,6 +2,10 @@
 
 A web-based Certificate Generator built with Flask that allows administrators to manage events, upload participant data, generate certificates, and verify certificate authenticity.
 
+## 🌐 Live Demo
+
+https://certificate-generator-1-6wst.onrender.com
+
 ## Features
 
 * Secure Admin Login
